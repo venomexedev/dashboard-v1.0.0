@@ -1,8 +1,9 @@
+---
 # Molactyl
 
 ## Overview
 
-Molactyl is a powerful and efficient dashboard built using **Bun**. It provides features like server creation, user management, an admin panel, a store, and an AFK page, delivering a seamless experience for managing your services.
+Molactyl is a powerful and efficient dashboard built using **Bun**. It provides features like server creation, user management, an admin panel, a store, an AFK page, and the ability to scan available nodes and images.
 
 ---
 
@@ -60,6 +61,16 @@ bun run index.js
 - **Admin Panel**: Powerful admin tools for managing your services.
 - **Store**: Integrated store for handling purchases and upgrades.
 - **AFK Page**: Dedicated page for AFK users.
+
+---
+
+## Scan Nodes and Images
+
+- To **scan nodes** available on your system, go to:  
+  `/scannodes`
+
+- To **scan images** available for server creation, go to:  
+  `/scanimages`
 
 ---
 

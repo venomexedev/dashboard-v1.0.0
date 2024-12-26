@@ -1,17 +1,74 @@
 # Molactyl
 
-## Dashboard Built using Bun 
+## Overview
 
-just run these commands
-must have git , bun
-```
-git clone https://github.com/hydren-dev/Molactyl.git
-cd Molactyl
-bun install
-mv .env_exemple .env
-```
-### Configure the .env file
-run the panel
-```
+Molactyl is a powerful and efficient dashboard built using **Bun**. It provides features like server creation, user management, an admin panel, a store, and an AFK page, delivering a seamless experience for managing your services.
+
+---
+
+## Prerequisites
+
+Before getting started, ensure you have the following installed:
+
+- **Git**: For cloning the repository.
+- **Bun**: To manage dependencies and run the application. You can install Bun from [bun.sh](https://bun.sh).
+
+---
+
+## Installation
+
+Follow the steps below to set up and run the Molactyl dashboard:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/hydren-dev/Molactyl.git
+   ```
+
+2. Navigate into the project directory:
+   ```bash
+   cd Molactyl
+   ```
+
+3. Install dependencies using Bun:
+   ```bash
+   bun install
+   ```
+
+4. Configure the environment file:
+   ```bash
+   mv .env_exemple .env
+   ```
+
+   Edit the `.env` file to match your setup.
+
+---
+
+## Running the Panel
+
+To start the Molactyl panel, use the following command:
+
+```bash
 bun run index.js
 ```
+
+---
+
+## Features
+
+- **Server Creation**: Easily create and manage servers.
+- **User Creation**: Manage users with a robust user system.
+- **Admin Panel**: Powerful admin tools for managing your services.
+- **Store**: Integrated store for handling purchases and upgrades.
+- **AFK Page**: Dedicated page for AFK users.
+
+---
+
+## Support
+
+For any issues or suggestions, please open an issue on the [GitHub repository](https://github.com/hydren-dev/Molactyl).
+
+---
+
+## License
+
+This project is licensed under the terms of the repository's license. Check the `LICENSE` file for details.

@@ -12,7 +12,7 @@ Molactyl is a powerful and efficient dashboard built using **Bun**. It provides 
 Before getting started, ensure you have the following installed:
 
 - **Git**: For cloning the repository.
-- **Bun**: To manage dependencies and run the application. You can install Bun from [bun.sh](https://bun.sh).
+- **NodeJS, NPM**: To manage dependencies and run the application. 
 
 ---
 
@@ -32,7 +32,7 @@ Follow the steps below to set up and run the Molactyl dashboard:
 
 3. Install dependencies using Bun:
    ```bash
-   bun install
+   npm install
    ```
 
 4. Configure the environment file:
@@ -49,7 +49,7 @@ Follow the steps below to set up and run the Molactyl dashboard:
 To start the Molactyl panel, use the following command:
 
 ```bash
-bun run index.js
+node index.js
 ```
 
 ---

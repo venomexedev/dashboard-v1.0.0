@@ -141,6 +141,7 @@ console.log(userId)
           image,
           imagename: imageName,
           memory,
+          disk: 10,
           cpu,
           ports: selectedPort,
           nodeId,

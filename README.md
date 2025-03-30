@@ -43,7 +43,7 @@ Follow the steps below to set up and run the dashboard:
 
 ---
 
-## Running the Panel
+## Running the Dashboard
 
 To start the Dashboard, use the following command:
 

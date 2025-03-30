@@ -1,65 +1,269 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | <%= name %></title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  </head>
-  <body style="font-family: 'Inter'" class="bg-gray-100">
-    <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8 pt-72">
-      <div class="w-full max-w-md space-y-8">
-        <div>
-          <% if (req.query.err == "INTERNALERROR") { %>
-          <div class="bg-red-900/50 border-l-4 border-red-400 rounded-lg text-red-100 px-4 py-3 relative" role="alert">
-            <div class="flex">
-              <div class="py-1">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-400 mr-3">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-                </svg>
-              </div>
-              <div>
-                <p class="font-bold">Internal Server Error</p>
-                <p class="text-sm relative">Molactyl couldn't process the action due to an internal issue.</p>
-              </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #0cebeb 0%, #20e3b2 50%, #29ffc6 100%);
+            --dark-bg: radial-gradient(circle at 10% 20%, #1a1a2e 0%, #16213e 90%);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: #f8fafc;
+        }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
+            z-index: -1;
+        }
+        
+        .glass-panel:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .btn-primary {
+            background: var(--primary-gradient);
+            transition: all 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+        
+        .btn-primary:hover::after {
+            opacity: 1;
+        }
+        
+        .btn-secondary {
+            background: var(--secondary-gradient);
+            transition: all 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(12, 235, 235, 0.2);
+        }
+        
+        .animated-text {
+            min-height: 4.5rem;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    
+    <div class="flex min-h-screen items-center justify-center px-4 py-12">
+        <div class="w-full max-w-4xl mx-auto">
+            <div class="glass-panel p-8 md:p-12 text-center">
+                <div class="flex justify-center mb-6">
+                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg">
+                        <i class="fas fa-rocket text-white text-3xl"></i>
+                    </div>
+                </div>
+                
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">
+                    <span id="animated-text" class="animated-text"></span>
+                </h1>
+                
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto mb-8">
+                    Premium hosting solutions with unmatched performance, security, and 24/7 support.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                    <a href="../login/discord" class="btn-primary text-white py-4 px-8 rounded-xl text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-3">
+                        <i class="fab fa-discord"></i> Login with Discord
+                    </a>
+                    <a href="../panel" class="btn-secondary text-gray-900 py-4 px-8 rounded-xl text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-3">
+                        <i class="fas fa-tachometer-alt"></i> Go to Panel
+                    </a>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+                    <div class="feature-card p-6 rounded-xl bg-white bg-opacity-5 border border-white border-opacity-10 transition-all hover:bg-opacity-10">
+                        <div class="feature-icon text-indigo-400">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Lightning Fast</h3>
+                        <p class="text-gray-300 text-sm">SSD-powered servers for maximum performance</p>
+                    </div>
+                    <div class="feature-card p-6 rounded-xl bg-white bg-opacity-5 border border-white border-opacity-10 transition-all hover:bg-opacity-10">
+                        <div class="feature-icon text-green-400">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Enterprise Security</h3>
+                        <p class="text-gray-300 text-sm">DDoS protection and daily backups</p>
+                    </div>
+                    <div class="feature-card p-6 rounded-xl bg-white bg-opacity-5 border border-white border-opacity-10 transition-all hover:bg-opacity-10">
+                        <div class="feature-icon text-blue-400">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">24/7 Support</h3>
+                        <p class="text-gray-300 text-sm">Dedicated support team always ready</p>
+                    </div>
+                </div>
             </div>
-          </div>
-          <% } %> 
-          <% if (req.query.err == "BANNED") { %>
-          <div class="bg-red-900/50 border-l-4 border-red-400 rounded-lg text-red-100 px-4 py-3 relative" role="alert">
-            <div class="flex">
-              <div class="py-1">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-400 mr-3">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-                </svg>
-              </div>
-              <div>
-                <p class="font-bold">Your account has been banned</p>
-                <p class="text-sm relative">You were banned for this reason: <%= req.query.reason %></p>
-              </div>
+            
+            <div class="text-center mt-8 text-gray-400 text-sm">
+                <p>© <%= new Date().getFullYear() %> <%= name %>. All rights reserved.</p>
             </div>
-          </div>
-          <% } %>            
-          <h2 class="mt-6 text-center text-4xl font-extrabold text-gray-800 mb-4">Login to <%= name %></h2>
-          <p class="mt-2 text-center text-sm text-gray-700 leading-relaxed">Ready to get started?</p>
         </div>
-        <form class="mt-8 space-y-6" action="#" method="POST">
-          <div class="flex items-center justify-center">
-            <div class="inline-flex flex items-center rounded-md shadow-sm space-x-4" role="group">
-              <!-- Enhanced Login Button -->
-              <a href="../login/discord" type="button" class="transition justify-center px-6 py-3 text-lg font-medium text-white bg-blue-500 border border-gray-700/50 rounded-lg hover:bg-blue-600/75 hover:text-white focus:ring-4 focus:ring-blue-600 focus:outline-none active:bg-blue-800">
-                Login
-              </a>
-              <!-- Enhanced Panel Button -->
-              <a href="../panel" type="button" class="transition justify-center px-6 py-3 text-lg font-medium text-white bg-emerald-700/75 border rounded-lg border-gray-700/50 hover:bg-emerald-600/75 hover:text-white focus:ring-4 focus:ring-emerald-600 focus:outline-none active:bg-emerald-800">
-                Panel
-              </a>
-            </div>
-          </div>
-        </form>
-      </div>
     </div>
-  </body>
+
+    <script>
+        // Typed.js initialization
+        var typed = new Typed("#animated-text", {
+            strings: ["Welcome to <%= name %>", "Premium Hosting Platform", "Performance Redefined", "Secure Cloud Solutions"],
+            typeSpeed: 50,
+            backSpeed: 30,
+            loop: true,
+            showCursor: true,
+            cursorChar: '|',
+            smartBackspace: true
+        });
+        
+        // Particles.js initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            const particleCount = window.innerWidth < 768 ? 50 : 100;
+            const particles = [];
+            
+            function createParticle() {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 5 + 2;
+                const posX = Math.random() * window.innerWidth;
+                const posY = Math.random() * window.innerHeight;
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 5;
+                const opacity = Math.random() * 0.6 + 0.2;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}px`;
+                particle.style.top = `${posY}px`;
+                particle.style.opacity = opacity;
+                particle.style.animation = `float ${duration}s linear ${delay}s infinite`;
+                
+                document.getElementById('particles-js').appendChild(particle);
+                particles.push(particle);
+                
+                // Animate particle
+                animateParticle(particle, duration);
+            }
+            
+            function animateParticle(particle, duration) {
+                const start = Date.now();
+                const startX = parseFloat(particle.style.left);
+                const startY = parseFloat(particle.style.top);
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 100 + Math.random() * 200;
+                
+                function update() {
+                    const elapsed = (Date.now() - start) / 1000;
+                    const progress = (elapsed % duration) / duration;
+                    
+                    particle.style.left = `${startX + Math.cos(angle) * distance * progress}px`;
+                    particle.style.top = `${startY + Math.sin(angle) * distance * progress}px`;
+                    
+                    if (parseFloat(particle.style.left) > window.innerWidth || 
+                        parseFloat(particle.style.top) > window.innerHeight ||
+                        parseFloat(particle.style.left) < 0 || 
+                        parseFloat(particle.style.top) < 0) {
+                        // Reset particle if it goes out of view
+                        particle.style.left = `${Math.random() * window.innerWidth}px`;
+                        particle.style.top = `${Math.random() * window.innerHeight}px`;
+                    } else {
+                        requestAnimationFrame(update);
+                    }
+                }
+                
+                update();
+            }
+            
+            // Create particles
+            for (let i = 0; i < particleCount; i++) {
+                createParticle();
+            }
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                particles.forEach(particle => {
+                    particle.remove();
+                });
+                
+                for (let i = 0; i < particleCount; i++) {
+                    createParticle();
+                }
+            });
+        });
+    </script>
+</body>
 </html>

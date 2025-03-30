@@ -1,10 +1,88 @@
+<style>
+  /* Animated Starry Background */
+  body {
+    position: relative;
+    overflow-x: hidden;
+    font-family: 'Space Grotesk', sans-serif;
+    background: linear-gradient(to bottom, #0a0e17, #1a2630);
+    min-height: 100vh;
+  }
+
+  .stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+  }
+
+  .star {
+    position: absolute;
+    background-color: #fff;
+    border-radius: 50%;
+    animation: twinkle var(--duration) infinite ease-in-out;
+    opacity: 0;
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; }
+    50% { opacity: var(--opacity); }
+  }
+
+  .shooting-star {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%);
+    border-radius: 50%;
+    animation: shoot var(--shoot-duration) linear infinite;
+    opacity: 0;
+  }
+
+  @keyframes shoot {
+    0% {
+      transform: translateX(0) translateY(0) scale(0.3);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    70% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(var(--shoot-x)) translateY(var(--shoot-y)) scale(1);
+      opacity: 0;
+    }
+  }
+
+  /* Enhance form contrast */
+  .form-container {
+    background: rgba(16, 24, 30, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* Make sure content is above stars */
+  main, .wrapper {
+    position: relative;
+    z-index: 1;
+  }
+</style>
+
 <body class="bg-[#10181e]" style="font-family: 'Space Grotesk', sans-serif;">
+  <!-- Starry Background -->
+  <div class="stars-container" id="starsContainer"></div>
+  
   <div>
     <%- include('./components/wrapper') %>
     <!-- Main Content -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.css" integrity="sha512-MpdEaY2YQ3EokN6lCD6bnWMl5Gwk7RjBbpKLovlrH6X+DRokrPRAF3zQJl1hZUiLXfo2e9MrOt+udOnHCAmi5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<main class="flex-grow container mx-auto px-4 py-8">
-    <div class="flex justify-between items-center w-full mx-auto pb-4">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.css" integrity="sha512-MpdEaY2YQ3EokN6lCD6bnWMl5Gwk7RjBbpKLovlrH6X+DRokrPRAF3zQJl1hZUiLXfo2e9MrOt+udOnHCAmi5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <main class="flex-grow container mx-auto px-4 py-8">
+      <!-- Rest of your existing content remains exactly the same -->
+      <div class="flex justify-between items-center w-full mx-auto pb-4">
         <!-- Welcome text and subtext on the left -->
         <div class="flex flex-col">
             <h1 class="text-xl text-white font-semibold mb-0.5" style="font-family: 'Cabin';">Create Server</h1>
@@ -57,131 +135,180 @@
                 </li>
             </ol>
         </nav>
-    </div>
+      </div>
 
-    <!-- Content -->
-
-    <!-- Error Messages -->
-    
-
-    <div class="max-w-4xl mx-auto p-8 bg-white/5 rounded-lg shadow-lg">
-      <form id="createServerForm" class="space-y-8">
-        <!-- Server Name -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <div>
-            <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Server Name</label>
-            <input type="text" name="name" id="name" placeholder="my-awesome-server" 
-              class="w-full rounded-lg bg-gray-800 text-white border border-gray-600 focus:ring-orange-500 focus:border-orange-500 placeholder-gray-500 transition px-4 py-2" />
+      <!-- Content -->
+      <div class="max-w-4xl mx-auto p-8 bg-white/5 rounded-lg shadow-lg form-container">
+        <form id="createServerForm" class="space-y-8">
+          <!-- Server Name -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div>
+              <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Server Name</label>
+              <input type="text" name="name" id="name" placeholder="my-awesome-server" 
+                class="w-full rounded-lg bg-gray-800 text-white border border-gray-600 focus:ring-orange-500 focus:border-orange-500 placeholder-gray-500 transition px-4 py-2" />
+            </div>
+      
+            <!-- RAM -->
+            <div>
+              <label for="memory" class="block text-sm font-medium text-gray-300 mb-2">RAM (GB)</label>
+              <input type="number" name="memory" id="memory" 
+                class="w-full rounded-lg bg-gray-800 text-white border border-gray-600 focus:ring-orange-500 focus:border-orange-500 placeholder-gray-500 transition px-4 py-2" />
+            </div>
+      
+            <!-- CPU -->
+            <div>
+                <label for="cpu" class="block text-sm font-medium text-gray-300 mb-2">CPU (cores)</label>
+              <input type="number" name="cpu" id="cpu" 
+                class="w-full rounded-lg bg-gray-800 text-white border border-gray-600 focus:ring-orange-500 focus:border-orange-500 placeholder-gray-500 transition px-4 py-2" />
+            </div>
+      
+            <!-- Disk -->
+            <div>
+              <label for="disk" class="block text-sm font-medium text-gray-300 mb-2">Disk (GB)</label>
+              <input type="number" name="disk" id="disk" 
+                class="w-full rounded-lg bg-gray-800 text-white border border-gray-600 focus:ring-orange-500 focus:border-orange-500 placeholder-gray-500 transition px-4 py-2" />
+            </div>
           </div>
-    
-          <!-- RAM -->
-          <div>
-            <label for="memory" class="block text-sm font-medium text-gray-300 mb-2">RAM (GB)</label>
-            <input type="number" name="memory" id="memory" 
-              class="w-full rounded-lg bg-gray-800 text-white border border-gray-600 focus:ring-orange-500 focus:border-orange-500 placeholder-gray-500 transition px-4 py-2" />
+      
+          <!-- Node Selector -->
+          <div class="w-full">
+            <label class="block text-sm font-medium text-gray-300 mb-2">Node</label>
+            <select id="node" 
+              class="w-full rounded-lg bg-gray-800 text-white border border-gray-600 focus:ring-orange-500 focus:border-orange-500 px-4 py-2">
+              <% nodes.forEach(function(node) { %>
+                <option value="<%= node.id %>"><%= node.name %></option>
+              <% }); %>
+            </select>
           </div>
-    
-          <!-- CPU -->
-          <div>
-              <label for="cpu" class="block text-sm font-medium text-gray-300 mb-2">CPU (cores)</label>
-            <input type="number" name="cpu" id="cpu" 
-              class="w-full rounded-lg bg-gray-800 text-white border border-gray-600 focus:ring-orange-500 focus:border-orange-500 placeholder-gray-500 transition px-4 py-2" />
+      
+          <!-- Image Selector -->
+          <div class="w-full">
+            <label class="block text-sm font-medium text-gray-300 mb-2">Image</label>
+            <select id="image" onchange="updateImageName()" 
+              class="w-full rounded-lg bg-gray-800 text-white border border-gray-600 focus:ring-orange-500 focus:border-orange-500 px-4 py-2">
+              <% images.forEach(function(image) { %>
+                <option value="<%= image.Id %>" data-variables='<%= JSON.stringify(image.Variables) %>'>
+                  <%= image.Name %>
+                </option>
+              <% }); %>
+            </select>
+            <input type="hidden" id="imageName" />
           </div>
-    
-          <!-- Disk -->
-          <div>
-            <label for="disk" class="block text-sm font-medium text-gray-300 mb-2">Disk (GB)</label>
-            <input type="number" name="disk" id="disk" 
-              class="w-full rounded-lg bg-gray-800 text-white border border-gray-600 focus:ring-orange-500 focus:border-orange-500 placeholder-gray-500 transition px-4 py-2" />
+      
+          <!-- Dynamic Variables -->
+          <div id="variablesContainer" class="grid grid-cols-1 gap-4"></div>
+      
+          <!-- Submit Button -->
+          <div class="flex justify-end">
+            <button type="button" onclick="submitForm()" 
+              class="px-6 py-3 bg-orange-600 text-white rounded-full shadow-md hover:bg-orange-700 transition focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
+              Create Server
+            </button>
           </div>
-        </div>
-    
-        <!-- Node Selector -->
-        <div class="w-full">
-          <label class="block text-sm font-medium text-gray-300 mb-2">Node</label>
-          <select id="node" 
-            class="w-full rounded-lg bg-gray-800 text-white border border-gray-600 focus:ring-orange-500 focus:border-orange-500 px-4 py-2">
-            <% nodes.forEach(function(node) { %>
-              <option value="<%= node.id %>"><%= node.name %></option>
-            <% }); %>
-          </select>
-        </div>
-    
-        <!-- Image Selector -->
-        <div class="w-full">
-          <label class="block text-sm font-medium text-gray-300 mb-2">Image</label>
-          <select id="image" onchange="updateImageName()" 
-            class="w-full rounded-lg bg-gray-800 text-white border border-gray-600 focus:ring-orange-500 focus:border-orange-500 px-4 py-2">
-            <% images.forEach(function(image) { %>
-              <option value="<%= image.Id %>" data-variables='<%= JSON.stringify(image.Variables) %>'>
-                <%= image.Name %>
-              </option>
-            <% }); %>
-          </select>
-          <input type="hidden" id="imageName" />
-        </div>
-    
-        <!-- Dynamic Variables -->
-        <div id="variablesContainer" class="grid grid-cols-1 gap-4"></div>
-    
-        <!-- Submit Button -->
-        <div class="flex justify-end">
-          <button type="button" onclick="submitForm()" 
-            class="px-6 py-3 bg-orange-600 text-white rounded-full shadow-md hover:bg-orange-700 transition focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
-            Create Server
-          </button>
-        </div>
-      </form>
-    </div>
-    
-    <script>
-      function updateImageName() {
-        const imageSelect = document.getElementById("image");
-        const selectedOption = imageSelect.options[imageSelect.selectedIndex];
-        document.getElementById("imageName").value = selectedOption.text;
-        checkVariables();
-      }
-    
-      function checkVariables() {
-  const select = document.getElementById("image");
-  const selectedOption = select.options[select.selectedIndex];
-  const variables = JSON.parse(selectedOption.getAttribute('data-variables') || '{}');
-  const container = document.getElementById("variablesContainer");
+        </form>
+      </div>
+    </main>
+  </div>
 
-  console.log(variables);  // Log for debugging
+<script>
+  // Create stars when DOM loads
+  document.addEventListener('DOMContentLoaded', function() {
+    const container = document.getElementById('starsContainer');
+    const starCount = 150;
+    const shootingStarCount = 3;
 
-  container.innerHTML = '';
-  if (Object.keys(variables).length > 0) {
-    for (const [key, value] of Object.entries(variables)) {
-      const input = document.createElement('input');
-      input.type = value.type || 'text';
-      input.placeholder = `${key} (default: ${value.default || ''})`;
-      input.className = 'w-full rounded-lg bg-gray-800 text-white border border-gray-600 focus:ring-green-500 px-4 py-2 mb-2';
-      input.id = key;
-      container.appendChild(input);
+    // Create twinkling stars
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      
+      // Random properties
+      const size = Math.random() * 1.5 + 0.5;
+      const x = Math.random() * 100;
+      const y = Math.random() * 100;
+      const opacity = Math.random() * 0.7 + 0.1;
+      const duration = Math.random() * 5 + 3 + 's';
+      const delay = Math.random() * 5 + 's';
+      
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      star.style.left = `${x}%`;
+      star.style.top = `${y}%`;
+      star.style.setProperty('--opacity', opacity);
+      star.style.setProperty('--duration', duration);
+      star.style.animationDelay = delay;
+      
+      container.appendChild(star);
     }
-  } else {
-    console.log("No variables to display.");
-  }
-}
 
-    
-      async function submitForm() {
-        const name = encodeURIComponent(document.getElementById("name").value);
-        const image = encodeURIComponent(document.getElementById("image").value);
-        const imageName = encodeURIComponent(document.getElementById("imageName").value);
-        const memory = encodeURIComponent(document.getElementById("memory").value);
-        const cpu = encodeURIComponent(document.getElementById("cpu").value);
-        const node = encodeURIComponent(document.getElementById("node").value);
-    
-        const variables = Array.from(document.querySelectorAll('#variablesContainer input'))
-          .reduce((acc, input) => ({ ...acc, [input.id]: input.value }), {});
-        
-        const variablesJSON = encodeURIComponent(JSON.stringify(variables));
-    
-        document.location.href = `/create?name=${name}&image=${image}&imageName=${imageName}&ram=${memory}&cpu=${cpu}&node=${node}&variables=${variablesJSON}`;
+    // Create shooting stars
+    for (let i = 0; i < shootingStarCount; i++) {
+      const shootingStar = document.createElement('div');
+      shootingStar.classList.add('shooting-star');
+      
+      // Random properties
+      const x = Math.random() * 20;
+      const y = Math.random() * 20;
+      const shootX = Math.random() * 100 + 100;
+      const shootY = Math.random() * 50 + 25;
+      const duration = Math.random() * 5 + 5 + 's';
+      const delay = Math.random() * 15 + 's';
+      
+      shootingStar.style.left = `${x}%`;
+      shootingStar.style.top = `${y}%`;
+      shootingStar.style.setProperty('--shoot-x', `${shootX}px`);
+      shootingStar.style.setProperty('--shoot-y', `${shootY}px`);
+      shootingStar.style.setProperty('--shoot-duration', duration);
+      shootingStar.style.animationDelay = delay;
+      
+      container.appendChild(shootingStar);
+    }
+  });
+
+  // Your existing form functions remain unchanged
+  function updateImageName() {
+    const imageSelect = document.getElementById("image");
+    const selectedOption = imageSelect.options[imageSelect.selectedIndex];
+    document.getElementById("imageName").value = selectedOption.text;
+    checkVariables();
+  }
+
+  function checkVariables() {
+    const select = document.getElementById("image");
+    const selectedOption = select.options[select.selectedIndex];
+    const variables = JSON.parse(selectedOption.getAttribute('data-variables') || '{}');
+    const container = document.getElementById("variablesContainer");
+
+    console.log(variables);  // Log for debugging
+
+    container.innerHTML = '';
+    if (Object.keys(variables).length > 0) {
+      for (const [key, value] of Object.entries(variables)) {
+        const input = document.createElement('input');
+        input.type = value.type || 'text';
+        input.placeholder = `${key} (default: ${value.default || ''})`;
+        input.className = 'w-full rounded-lg bg-gray-800 text-white border border-gray-600 focus:ring-green-500 px-4 py-2 mb-2';
+        input.id = key;
+        container.appendChild(input);
       }
-    </script>
+    } else {
+      console.log("No variables to display.");
+    }
+  }
+
+  async function submitForm() {
+    const name = encodeURIComponent(document.getElementById("name").value);
+    const image = encodeURIComponent(document.getElementById("image").value);
+    const imageName = encodeURIComponent(document.getElementById("imageName").value);
+    const memory = encodeURIComponent(document.getElementById("memory").value);
+    const cpu = encodeURIComponent(document.getElementById("cpu").value);
+    const node = encodeURIComponent(document.getElementById("node").value);
+
+    const variables = Array.from(document.querySelectorAll('#variablesContainer input'))
+      .reduce((acc, input) => ({ ...acc, [input.id]: input.value }), {});
     
-                                                
-                        
+    const variablesJSON = encodeURIComponent(JSON.stringify(variables));
+
+    document.location.href = `/create?name=${name}&image=${image}&imageName=${imageName}&ram=${memory}&cpu=${cpu}&node=${node}&variables=${variablesJSON}`;
+  }
+</script>

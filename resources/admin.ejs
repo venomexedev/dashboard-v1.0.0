@@ -1,409 +1,335 @@
 <%- include('./components/wrapper') %>
 
-<main class="flex-1 bg-gray-800">
-  <div class="py-6">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-      <!-- Content -->
+<main class="flex-1 bg-gray-900">
+  <div class="py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Notification Alerts -->
       <% if (req.query.success == "COMPLETE") { %>
-      <div class="bg-green-900/50 border-l-4 border-green-400 rounded-lg text-green-100 px-4 py-3 relative mb-8" role="alert">
-        <div class="flex">
-          <div class="py-1">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-green-400 mr-3">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      <div class="bg-emerald-900/30 border border-emerald-700 rounded-lg text-emerald-100 px-4 py-3 mb-6 shadow-lg backdrop-blur-sm" role="alert">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <svg class="w-5 h-5 text-emerald-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-          </div>
-          <div>
-            <p class="font-bold">Action Completed</p>
-            <p class="text-sm relative">The changes to the user have been made.</p>
-          </div>
-          <span onclick="location.href = '../admin';" class="absolute top-0 bottom-0 right-0 px-4 py-3">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-green-400">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </span>
-        </div>
-      </div>
-      <% } %> <% if (req.query.err == "INVALIDPARAMS") { %>
-      <div class="bg-red-900/50 border-l-4 border-red-400 rounded-lg text-red-100 px-4 py-3 relative mb-8" role="alert">
-        <div class="flex">
-          <div class="py-1">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-400 mr-3">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-            </svg>
-          </div>
-          <div>
-            <p class="font-bold">Missing Parameters</p>
-            <p class="text-sm relative">All inputs must be filled out in order for you to create a server.</p>
-          </div>
-          <span onclick="location.href = '../admin';" class="absolute top-0 bottom-0 right-0 px-4 py-3">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-400">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </span>
-        </div>
-      </div>
-      <% } %> <% if (req.query.err == "FETCH_FAILED") { %>
-      <div class="bg-red-900/50 border-l-4 border-red-400 rounded-lg text-red-100 px-4 py-3 relative mb-8" role="alert">
-        <div class="flex">
-          <div class="py-1">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-400 mr-3">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-            </svg>
-          </div>
-          <div>
-            <p class="font-bold">Unable to retrieve eggs</p>
-            <p class="text-sm relative">An error occurred when fetching the eggs</p>
-          </div>
-          <span onclick="location.href = '../admin';" class="absolute top-0 bottom-0 right-0 px-4 py-3">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-400">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </span>
-        </div>
-      </div>
-      <% } else if (req.query.err == "INVALIDAMOUNT") { %>
-        <div class="bg-red-900/50 border-l-4 border-red-400 rounded-lg text-red-100 px-4 py-3 relative mb-8" role="alert">
-          <div class="flex">
-            <div class="py-1">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-400 mr-3">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-              </svg>
-            </div>
             <div>
-              <p class="font-bold">Invalid Amount</p>
-              <p class="text-sm relative">The amount entered is invalid. Please check and try again.</p>
+              <p class="font-semibold">Action Completed</p>
+              <p class="text-xs opacity-80">The changes to the user have been made.</p>
             </div>
-            <span onclick="location.href = '../admin';" class="absolute top-0 bottom-0 right-0 px-4 py-3">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-400">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </span>
           </div>
+          <button onclick="location.href = '../admin';" class="text-emerald-400 hover:text-emerald-300 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
-        <% } else if (req.query.success == "UNBANNED") { %>
-          <div class="bg-green-900/50 border-l-4 border-green-400 rounded-lg text-green-100 px-4 py-3 relative" role="alert">
-            <div class="flex">
-              <div class="py-1">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-green-400 mr-3">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div>
-                <p class="font-bold">User Unbanned</p>
-                <p class="text-sm relative">The user has been unbanned.</p>
-              </div>
-              <span onclick="location.href = '../dashboard';" class="absolute top-0 bottom-0 right-0 px-4 py-3">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-green-400">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </span>
+      </div>
+      <% } %>
+      
+      <!-- Other notification templates similarly updated -->
+      <% if (req.query.err) { %>
+      <div class="bg-rose-900/30 border border-rose-700 rounded-lg text-rose-100 px-4 py-3 mb-6 shadow-lg backdrop-blur-sm" role="alert">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <svg class="w-5 h-5 text-rose-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <div>
+              <p class="font-semibold">
+                <% if (req.query.err == "INVALIDPARAMS") { %> Missing Parameters
+                <% } else if (req.query.err == "FETCH_FAILED") { %> Unable to retrieve eggs
+                <% } else if (req.query.err == "INVALIDAMOUNT") { %> Invalid Amount <% } %>
+              </p>
+              <p class="text-xs opacity-80">
+                <% if (req.query.err == "INVALIDPARAMS") { %> All inputs must be filled out.
+                <% } else if (req.query.err == "FETCH_FAILED") { %> An error occurred when fetching the eggs.
+                <% } else if (req.query.err == "INVALIDAMOUNT") { %> The amount entered is invalid. <% } %>
+              </p>
             </div>
           </div>
-          <% } else if (req.query.success == "BANNED") { %>
-            <div class="bg-green-900/50 border-l-4 border-green-400 rounded-lg text-green-100 px-4 py-3 relative" role="alert">
-              <div class="flex">
-                <div class="py-1">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-green-400 mr-3">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+          <button onclick="location.href = '../admin';" class="text-rose-400 hover:text-rose-300 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <% } %>
+
+      <!-- Success messages for ban/unban -->
+      <% if (req.query.success == "UNBANNED") { %>
+      <div class="bg-emerald-900/30 border border-emerald-700 rounded-lg text-emerald-100 px-4 py-3 mb-6 shadow-lg backdrop-blur-sm" role="alert">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <svg class="w-5 h-5 text-emerald-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+              <p class="font-semibold">User Unbanned</p>
+              <p class="text-xs opacity-80">The user has been unbanned.</p>
+            </div>
+          </div>
+          <button onclick="location.href = '../dashboard';" class="text-emerald-400 hover:text-emerald-300 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <% } else if (req.query.success == "BANNED") { %>
+      <div class="bg-emerald-900/30 border border-emerald-700 rounded-lg text-emerald-100 px-4 py-3 mb-6 shadow-lg backdrop-blur-sm" role="alert">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <svg class="w-5 h-5 text-emerald-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+              <p class="font-semibold">User Banned</p>
+              <p class="text-xs opacity-80">The user has been banned.</p>
+            </div>
+          </div>
+          <button onclick="location.href = '../dashboard';" class="text-emerald-400 hover:text-emerald-300 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <% } %>
+
+      <!-- Main Content Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Coin Management Section -->
+        <div class="bg-gray-800/50 rounded-xl p-6 shadow-lg border border-gray-700/50">
+          <div class="mb-6">
+            <h2 class="text-xl font-bold text-white mb-1">Coin Management</h2>
+            <p class="text-gray-400 text-sm">Manage user coin balances</p>
+          </div>
+
+          <div class="space-y-6">
+            <!-- Add Coins -->
+            <div>
+              <h3 class="text-md font-semibold text-gray-300 mb-3">Add Coins</h3>
+              <div class="space-y-4">
+                <div>
+                  <label for="ac-email" class="block text-sm font-medium text-gray-400 mb-1">Email</label>
+                  <input type="text" id="ac-email" class="w-full px-4 py-2 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="user@example.com">
                 </div>
                 <div>
-                  <p class="font-bold">User Banned</p>
-                  <p class="text-sm relative">The user has been banned.</p>
+                  <label for="ac-amount" class="block text-sm font-medium text-gray-400 mb-1">Amount</label>
+                  <input type="text" id="ac-amount" class="w-full px-4 py-2 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="100">
                 </div>
-                <span onclick="location.href = '../dashboard';" class="absolute top-0 bottom-0 right-0 px-4 py-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-green-400">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </span>
+                <button onclick="addCoins()" class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                  Add Coins
+                </button>
               </div>
             </div>
-            <% } %>
 
-  <div class="flex flex-wrap -mx-4">
-    <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
+            <!-- Set Coins -->
+            <div>
+              <h3 class="text-md font-semibold text-gray-300 mb-3">Set Coins</h3>
+              <div class="space-y-4">
+                <div>
+                  <label for="sc-email" class="block text-sm font-medium text-gray-400 mb-1">Email</label>
+                  <input type="text" id="sc-email" class="w-full px-4 py-2 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="user@example.com">
+                </div>
+                <div>
+                  <label for="sc-amount" class="block text-sm font-medium text-gray-400 mb-1">Amount</label>
+                  <input type="text" id="sc-amount" class="w-full px-4 py-2 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="100">
+                </div>
+                <button onclick="setCoins()" class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                  Set Coins
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <h2 class="text-white font-bold">Add coins</h2>
-      <p class="text-gray-400">Add coins to a user</p>
+        <!-- Resource Management Section -->
+        <div class="bg-gray-800/50 rounded-xl p-6 shadow-lg border border-gray-700/50">
+          <div class="mb-6">
+            <h2 class="text-xl font-bold text-white mb-1">Resource Management</h2>
+            <p class="text-gray-400 text-sm">Allocate server resources to users</p>
+          </div>
 
-      <br />
+          <div class="space-y-6">
+            <!-- Add Resources -->
+            <div>
+              <h3 class="text-md font-semibold text-gray-300 mb-3">Add Resources</h3>
+              <div class="space-y-4">
+                <div>
+                  <label for="ar-email" class="block text-sm font-medium text-gray-400 mb-1">Email</label>
+                  <input type="text" id="ar-email" class="w-full px-4 py-2 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="user@example.com">
+                </div>
+                <div class="grid grid-cols-3 gap-4">
+                  <div>
+                    <label for="ar-cpu" class="block text-sm font-medium text-gray-400 mb-1">CPU</label>
+                    <input type="text" id="ar-cpu" class="w-full px-4 py-2 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Cores">
+                  </div>
+                  <div>
+                    <label for="ar-ram" class="block text-sm font-medium text-gray-400 mb-1">RAM</label>
+                    <input type="text" id="ar-ram" class="w-full px-4 py-2 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="GB">
+                  </div>
+                  <div>
+                    <label for="ar-disk" class="block text-sm font-medium text-gray-400 mb-1">Disk</label>
+                    <input type="text" id="ar-disk" class="w-full px-4 py-2 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="GB">
+                  </div>
+                </div>
+                <button onclick="addResources()" class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                  Add Resources
+                </button>
+              </div>
+            </div>
 
-      <label for="ac-amount" class="block text-sm font-medium text-gray-400">Email</label>
-      <div class="mt-1 flex rounded-md shadow-sm w-80">
-        <input type="text" name="ac-amount" id="ac-email" class="transition ease-in-out delay-100 block w-80 flex-1 text-white rounded-md bg-gray-700 border-gray-600/75 focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="example@example.com" />
+            <!-- Set Resources -->
+            <div>
+              <h3 class="text-md font-semibold text-gray-300 mb-3">Set Resources</h3>
+              <div class="space-y-4">
+                <div>
+                  <label for="sr-email" class="block text-sm font-medium text-gray-400 mb-1">Email</label>
+                  <input type="text" id="sr-email" class="w-full px-4 py-2 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="user@example.com">
+                </div>
+                <div class="grid grid-cols-3 gap-4">
+                  <div>
+                    <label for="sr-cpu" class="block text-sm font-medium text-gray-400 mb-1">CPU</label>
+                    <input type="text" id="sr-cpu" class="w-full px-4 py-2 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Cores">
+                  </div>
+                  <div>
+                    <label for="sr-ram" class="block text-sm font-medium text-gray-400 mb-1">RAM</label>
+                    <input type="text" id="sr-ram" class="w-full px-4 py-2 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="GB">
+                  </div>
+                  <div>
+                    <label for="sr-disk" class="block text-sm font-medium text-gray-400 mb-1">Disk</label>
+                    <input type="text" id="sr-disk" class="w-full px-4 py-2 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="GB">
+                  </div>
+                </div>
+                <button onclick="setResources()" class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                  Set Resources
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- User Management Section -->
+        <div class="bg-gray-800/50 rounded-xl p-6 shadow-lg border border-gray-700/50">
+          <div class="mb-6">
+            <h2 class="text-xl font-bold text-white mb-1">User Management</h2>
+            <p class="text-gray-400 text-sm">Manage user accounts and permissions</p>
+          </div>
+
+          <div class="space-y-6">
+            <!-- Ban User -->
+            <div>
+              <h3 class="text-md font-semibold text-gray-300 mb-3">Ban User</h3>
+              <div class="space-y-4">
+                <div>
+                  <label for="ban-email" class="block text-sm font-medium text-gray-400 mb-1">Email</label>
+                  <input type="text" id="ban-email" class="w-full px-4 py-2 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="user@example.com" required>
+                </div>
+                <div>
+                  <label for="ban-reason" class="block text-sm font-medium text-gray-400 mb-1">Reason</label>
+                  <input type="text" id="ban-reason" class="w-full px-4 py-2 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Reason for ban">
+                </div>
+                <button onclick="ban()" class="w-full px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+                  Ban User
+                </button>
+              </div>
+            </div>
+
+            <!-- Unban User -->
+            <div>
+              <h3 class="text-md font-semibold text-gray-300 mb-3">Unban User</h3>
+              <div class="space-y-4">
+                <div>
+                  <label for="unban-email" class="block text-sm font-medium text-gray-400 mb-1">Email</label>
+                  <input type="text" id="unban-email" class="w-full px-4 py-2 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="user@example.com" required>
+                </div>
+                <button onclick="unban()" class="w-full px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+                  Unban User
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- System Tools Section -->
+        <div class="bg-gray-800/50 rounded-xl p-6 shadow-lg border border-gray-700/50">
+          <div class="mb-6">
+            <h2 class="text-xl font-bold text-white mb-1">System Tools</h2>
+            <p class="text-gray-400 text-sm">Administrative system utilities</p>
+          </div>
+
+          <div class="space-y-6">
+            <!-- Scan Images -->
+            <div>
+              <h3 class="text-md font-semibold text-gray-300 mb-3">Scan Images</h3>
+              <p class="text-gray-400 text-sm mb-4">Update available container images from API</p>
+              <a href="/scanimages" class="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                Scan Images
+              </a>
+            </div>
+
+            <!-- Scan Nodes -->
+            <div>
+              <h3 class="text-md font-semibold text-gray-300 mb-3">Scan Nodes</h3>
+              <p class="text-gray-400 text-sm mb-4">Update available nodes from API</p>
+              <a href="/scannodes" class="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+                </svg>
+                Scan Nodes
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <br />
-
-      <label for="ac-amount" class="block text-sm font-medium text-gray-400">Amount</label>
-      <div class="mt-1 flex rounded-md shadow-sm w-80">
-        <input type="text" name="ac-amount" id="ac-amount" class="transition ease-in-out delay-100 block w-80 flex-1 text-white rounded-md bg-gray-700 border-gray-600/75 focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="100" />
-      </div>
-
-      <br />
-
-      <a onclick="addCoins()" type="button" class="mt-8 transition px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-blue-500 rounded-lg hover:bg-blue-600 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-600 focus:text-white"> Add </a>
-
-      <script>
-        async function addCoins() {
-          let email = encodeURIComponent(document.getElementById("ac-email").value);
-          let amount = encodeURIComponent(document.getElementById("ac-amount").value);
-          document.location.href = `/addcoins?amount=${amount}&email=${email}`;
-        };
-      </script>
-    </div>
-
-      <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
-      <h2 class="text-white font-bold">Set coins</h2>
-      <p class="text-gray-400">Set coins for a user</p>
-
-      <br />
-
-      <label for="sc-email" class="block text-sm font-medium text-gray-400">Email</label>
-      <div class="mt-1 flex rounded-md shadow-sm w-80">
-        <input type="text" name="sc-email" id="sc-email" class="transition ease-in-out delay-100 block w-80 flex-1 text-white rounded-md bg-gray-700 border-gray-600/75 focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="example@example.com" />
-      </div>
-
-      <br />
-
-      <label for="sc-amount" class="block text-sm font-medium text-gray-400">Amount</label>
-      <div class="mt-1 flex rounded-md shadow-sm w-80">
-        <input type="text" name="sc-amount" id="sc-amount" class="transition ease-in-out delay-100 block w-80 flex-1 text-white rounded-md bg-gray-700 border-gray-600/75 focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="100" />
-      </div>
-
-      <br />
-
-      <a onclick="setCoins()" type="button" class="mt-8 transition px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-blue-500 rounded-lg hover:bg-blue-600 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-600 focus:text-white"> Set </a>
-      
-      <script>
-        async function setCoins() {
-          let email = encodeURIComponent(document.getElementById("sc-email").value);
-          let amount = encodeURIComponent(document.getElementById("sc-amount").value);
-          document.location.href = `/setcoins?amount=${amount}&email=${email}`;
-        };
-      </script>
-
-    </div>
-  </div>
-      
-    <br />
-
-    <div class="hidden sm:block" aria-hidden="true">
-      <div class="py-5">
-        <div class="border-t border-gray-700/75"></div>
-      </div>
-    </div>
-
-    <br />
-
-  <div class="flex flex-wrap -mx-4">
-    <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
-
-      <h2 class="text-white font-bold">Add Resources</h2>
-      <p class="text-gray-400">Allocate resources to a user</p>
-
-      <br />
-
-      <label for="ar-email" class="block text-sm font-medium text-gray-400">Email</label>
-      <div class="mt-1 flex rounded-md shadow-sm w-80">
-        <input type="text" name="ar-email" id="ar-email" class="transition ease-in-out delay-100 block w-80 flex-1 text-white rounded-md bg-gray-700 border-gray-600/75 focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="example@example.com" />
-      </div>
-
-      <br />
-
-      <label for="ar-cpu" class="block text-sm font-medium text-gray-400">CPU</label>
-      <div class="mt-1 flex rounded-md shadow-sm w-80">
-        <input type="text" name="ar-cpu" id="ar-cpu" class="transition ease-in-out delay-100 block w-80 flex-1 text-white rounded-md bg-gray-700 border-gray-600/75 focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="CPU Cores" />
-      </div>
-
-      <br />
-
-      <label for="ar-ram" class="block text-sm font-medium text-gray-400">RAM</label>
-      <div class="mt-1 flex rounded-md shadow-sm w-80">
-        <input type="text" name="ar-ram" id="ar-ram" class="transition ease-in-out delay-100 block w-80 flex-1 text-white rounded-md bg-gray-700 border-gray-600/75 focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="RAM in GB" />
-      </div>
-
-      <br />
-
-      <label for="ar-disk" class="block text-sm font-medium text-gray-400">Disk</label>
-      <div class="mt-1 flex rounded-md shadow-sm w-80">
-        <input type="text" name="ar-disk" id="ar-disk" class="transition ease-in-out delay-100 block w-80 flex-1 text-white rounded-md bg-gray-700 border-gray-600/75 focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="Disk Space in GB" />
-      </div>
-      
-      <br />
-
-      <a onclick="addResources()" type="button" class="mt-8 transition px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-blue-500 rounded-lg hover:bg-blue-600 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-600 focus:text-white"> Add Resources </a>
-
-      <br />
-
-      <script>
-        async function addResources() {
-          let email = encodeURIComponent(document.getElementById("ar-email").value);
-          let cpu = encodeURIComponent(document.getElementById("ar-cpu").value);
-          let ram = encodeURIComponent(document.getElementById("ar-ram").value);
-          let disk = encodeURIComponent(document.getElementById("ar-disk").value);
-          document.location.href = `/addresources?email=${email}&cpu=${cpu}&ram=${ram}&disk=${disk}`;
-        };
-      </script>
-    </div>
-
-    <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
-      <h2 class="text-white font-bold">Set Resources</h2>
-      <p class="text-gray-400">Set resources to a user</p>
-
-      <br />
-
-      <label for="sr-email" class="block text-sm font-medium text-gray-400">Email</label>
-      <div class="mt-1 flex rounded-md shadow-sm w-80">
-        <input type="text" name="sr-email" id="sr-email" class="transition ease-in-out delay-100 block w-80 flex-1 text-white rounded-md bg-gray-700 border-gray-600/75 focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="example@example.com" />
-      </div>
-
-      <br />
-
-      <label for="sr-cpu" class="block text-sm font-medium text-gray-400">CPU</label>
-      <div class="mt-1 flex rounded-md shadow-sm w-80">
-        <input type="text" name="sr-cpu" id="sr-cpu" class="transition ease-in-out delay-100 block w-80 flex-1 text-white rounded-md bg-gray-700 border-gray-600/75 focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="CPU Cores" />
-      </div>
-
-      <br />
-
-      <label for="sr-ram" class="block text-sm font-medium text-gray-400">RAM</label>
-      <div class="mt-1 flex rounded-md shadow-sm w-80">
-        <input type="text" name="sr-ram" id="sr-ram" class="transition ease-in-out delay-100 block w-80 flex-1 text-white rounded-md bg-gray-700 border-gray-600/75 focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="RAM in GB" />
-      </div>
-
-      <br />
-
-      <label for="sr-disk" class="block text-sm font-medium text-gray-400">Disk</label>
-      <div class="mt-1 flex rounded-md shadow-sm w-80">
-        <input type="text" name="sr-disk" id="sr-disk" class="transition ease-in-out delay-100 block w-80 flex-1 text-white rounded-md bg-gray-700 border-gray-600/75 focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="Disk Space in GB" />
-      </div>
-
-      <br />
-
-      <a onclick="setResources()" type="button" class="mt-8 transition px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-blue-500 rounded-lg hover:bg-blue-600 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-600 focus:text-white"> Add Resources </a>
-
-      <br />
-
-      <script>
-        async function setResources() {
-          let email = encodeURIComponent(document.getElementById("sr-email").value);
-          let cpu = encodeURIComponent(document.getElementById("sr-cpu").value);
-          let ram = encodeURIComponent(document.getElementById("sr-ram").value);
-          let disk = encodeURIComponent(document.getElementById("sr-disk").value);
-          document.location.href = `/setresources?email=${email}&cpu=${cpu}&ram=${ram}&disk=${disk}`;
-        };
-      </script>
     </div>
   </div>
-
-  <br>
-
-  <div class="hidden sm:block" aria-hidden="true">
-    <div class="py-5">
-      <div class="border-t border-gray-700/75"></div>
-    </div>
-  </div>
-
-  <div class="flex flex-wrap -mx-4">
-    <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
-  
-      <h2 class="text-white font-bold">Ban User</h2>
-      <p class="text-gray-400">Ban a user by email</p>
-  
-      <br />
-  
-      <label for="ban-email" class="block text-sm font-medium text-gray-400">Email</label>
-      <div class="mt-1 flex rounded-md shadow-sm w-80">
-        <input type="text" name="ban-email" id="ban-email" class="transition ease-in-out delay-100 block w-80 flex-1 text-white rounded-md bg-gray-700 border-gray-600/75 focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="example@example.com" required/>
-      </div>
-
-      <br />
-
-      <label for="ban-reason" class="block text-sm font-medium text-gray-400">Reason</label>
-      <div class="mt-1 flex rounded-md shadow-sm w-80">
-        <input type="text" name="ban-reason" id="ban-reason" class="transition ease-in-out delay-100 block w-80 flex-1 text-white rounded-md bg-gray-700 border-gray-600/75 focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="Enter the reason" />
-      </div>
-  
-      <br />
-  
-      <a onclick="ban()" type="button" class="mt-8 transition px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-blue-500 rounded-lg hover:bg-blue-600 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-600 focus:text-white"> Ban </a>
-  
-      <script>
-        async function ban() {
-          let email = encodeURIComponent(document.getElementById("ban-email").value);
-          let reason = encodeURIComponent(document.getElementById("ban-reason").value);
-          document.location.href = `/ban?email=${email}&reason=${reason}`;
-        };
-      </script>
-    </div>
-  
-    <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
-  
-      <h2 class="text-white font-bold">Unban User</h2>
-      <p class="text-gray-400">Unban a user by email</p>
-  
-      <br />
-  
-      <label for="unban-email" class="block text-sm font-medium text-gray-400">Email</label>
-      <div class="mt-1 flex rounded-md shadow-sm w-80">
-        <input type="text" name="unban-email" id="unban-email" class="transition ease-in-out delay-100 block w-80 flex-1 text-white rounded-md bg-gray-700 border-gray-600/75 focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="example@example.com" required/>
-      </div>
-  
-      <br />
-  
-      <a onclick="unban()" type="button" class="mt-8 transition px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-blue-500 rounded-lg hover:bg-blue-600 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-600 focus:text-white"> Unban </a>
-  
-      <script>
-        async function unban() {
-          let email = encodeURIComponent(document.getElementById("unban-email").value);
-          document.location.href = `/unban?email=${email}`;
-        };
-      </script>
-    </div>
-  </div>  
-
-  <br>
-
-  <div class="hidden sm:block" aria-hidden="true">
-    <div class="py-5">
-      <div class="border-t border-gray-700/75"></div>
-    </div>
-  </div>
-
-  <div class="flex flex-wrap -mx-4">
-    <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
-
-      <br />
-      <h2 class="text-white font-bold">Scan Images</h2>
-      <p class="text-gray-400">Scan images from API</p>
-      <br />
-
-      <a href="/scanimages" type="button" class="mt-8 transition px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-blue-500 rounded-lg hover:bg-blue-600 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-600 focus:text-white">
-        Scan Images
-      </a>
-    </div>
-    <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
-      <br />
-
-      <h2 class="text-white font-bold">Scan Nodes</h2>
-      <p class="text-gray-400">Scan nodes from API</p>
-
-      <br />
-
-      <a href="/scannodes" type="button" class="mt-8 transition px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-blue-500 rounded-lg hover:bg-blue-600 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-600 focus:text-white">
-        Scan Nodes
-      </a>
-    </div>
-  </div>
-  <br />
-
-  <br /><br />
-  </div>
-  <br><br>
-  <br>
 </main>
-</div>
-</div>
+
+<script>
+  // All the existing script functions remain the same
+  async function addCoins() {
+    let email = encodeURIComponent(document.getElementById("ac-email").value);
+    let amount = encodeURIComponent(document.getElementById("ac-amount").value);
+    document.location.href = `/addcoins?amount=${amount}&email=${email}`;
+  };
+
+  async function setCoins() {
+    let email = encodeURIComponent(document.getElementById("sc-email").value);
+    let amount = encodeURIComponent(document.getElementById("sc-amount").value);
+    document.location.href = `/setcoins?amount=${amount}&email=${email}`;
+  };
+
+  async function addResources() {
+    let email = encodeURIComponent(document.getElementById("ar-email").value);
+    let cpu = encodeURIComponent(document.getElementById("ar-cpu").value);
+    let ram = encodeURIComponent(document.getElementById("ar-ram").value);
+    let disk = encodeURIComponent(document.getElementById("ar-disk").value);
+    document.location.href = `/addresources?email=${email}&cpu=${cpu}&ram=${ram}&disk=${disk}`;
+  };
+
+  async function setResources() {
+    let email = encodeURIComponent(document.getElementById("sr-email").value);
+    let cpu = encodeURIComponent(document.getElementById("sr-cpu").value);
+    let ram = encodeURIComponent(document.getElementById("sr-ram").value);
+    let disk = encodeURIComponent(document.getElementById("sr-disk").value);
+    document.location.href = `/setresources?email=${email}&cpu=${cpu}&ram=${ram}&disk=${disk}`;
+  };
+
+  async function ban() {
+    let email = encodeURIComponent(document.getElementById("ban-email").value);
+    let reason = encodeURIComponent(document.getElementById("ban-reason").value);
+    document.location.href = `/ban?email=${email}&reason=${reason}`;
+  };
+
+  async function unban() {
+    let email = encodeURIComponent(document.getElementById("unban-email").value);
+    document.location.href = `/unban?email=${email}`;
+  };
+</script>
 
 <%- include('./components/footer') %>

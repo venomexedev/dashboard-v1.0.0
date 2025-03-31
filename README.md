@@ -60,5 +60,8 @@ node .
 - **Admin Panel**: Powerful admin tools for managing your services.
 - **Store**: Integrated store for handling purchases and upgrades.
 - **AFK Page**: Dedicated page for AFK users.
+  ---------------------------------------------------
+  - ## editors
+  - ** hopingboyz**
 
 This project is licensed under the terms of the repository's license. Check the `LICENSE` file for details.

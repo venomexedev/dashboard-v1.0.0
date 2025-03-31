@@ -38,7 +38,7 @@ Follow the steps below to set up and run the dashboard:
    ```bash
    mv .env_exemple .env
    ```
- 4. Config it:
+5. Config it:
    ```bash
    nano .env
    ```

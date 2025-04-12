@@ -1,205 +1,376 @@
-<body class="bg-[#10181e] text-white font-sans relative overflow-hidden">
-  <div class="absolute inset-0 -z-10">
-    <canvas id="animated-bg" class="w-full h-full"></canvas>
-  </div>
-  <%- include('./components/wrapper') %>
-<!-- Main Content -->
-<main class="flex-grow container mx-auto px-4 py-8" x-data="store()">
-  <div class="flex justify-between items-center w-full mx-auto pb-4">
-      <!-- Welcome text and subtext on the left -->
-      <div class="flex flex-col">
-          <h1 class="text-xl text-white font-semibold mb-0.5" style="font-family: 'Cabin';">Store</h1>
-          <p class="text-gray-400 text-md">Use your Coins to upgrade your servers by purchasing resources!</p>
-      </div>
+<%- include('./components/wrapper') %>
 
-      <!-- Breadcrumbs on the right -->
-      <nav aria-label="Breadcrumb" class="inline-flex py-2 px-4 rounded-xl bg-white/5 transition-colors duration-200">
-          <ol role="list" class="flex items-center space-x-2">
-              <li>
-                  <a href="#_" class="text-sm flex items-center gap-2 text-zinc-400 hover:text-zinc-200 transition-colors duration-200" aria-current="false">
-                      <svg
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="icon icon-tabler size-4 icons-tabler-outline icon-tabler-home"
-                      >
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                          <path d="M5 12l-2 0l9 -9l9 9l-2 0"></path>
-                          <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"></path>
-                          <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"></path>
+        <main class="flex-1 bg-gradient-to-br from-gray-900 to-gray-800">
+          <div class="py-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+              <!-- Animated Notifications -->
+              <% if (req.query.success == "BOUGHTRESOURCE") { %>
+              <div class="animate-fade-in-up bg-green-900/30 border border-green-500/30 rounded-lg text-green-100 px-4 py-3 relative mb-6 shadow-lg backdrop-blur-sm" role="alert">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                  <div class="ml-3">
+                    <p class="font-medium">Purchase Successful</p>
+                    <p class="text-sm opacity-90">The resources have been added to your account.</p>
+                  </div>
+                  <button onclick="this.parentElement.remove()" class="ml-auto -mx-1.5 -my-1.5 rounded-lg p-1.5 inline-flex items-center justify-center h-8 w-8 hover:bg-green-800/30 transition-colors focus:outline-none">
+                    <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <% } %> 
+              
+              <% if (req.query.err == "NOTENOUGHCOINS") { %>
+              <div class="animate-fade-in-up bg-red-900/30 border border-red-500/30 rounded-lg text-red-100 px-4 py-3 relative mb-6 shadow-lg backdrop-blur-sm" role="alert">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                  <div class="ml-3">
+                    <p class="font-medium">Insufficient Balance</p>
+                    <p class="text-sm opacity-90">You don't have enough coins to complete this purchase.</p>
+                  </div>
+                  <button onclick="this.parentElement.remove()" class="ml-auto -mx-1.5 -my-1.5 rounded-lg p-1.5 inline-flex items-center justify-center h-8 w-8 hover:bg-red-800/30 transition-colors focus:outline-none">
+                    <svg class="w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <% } else if (req.query.err == "INVALIDAMOUNT") { %>
+                <div class="animate-fade-in-up bg-red-900/30 border border-red-500/30 rounded-lg text-red-100 px-4 py-3 relative mb-6 shadow-lg backdrop-blur-sm" role="alert">
+                  <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
                       </svg>
-                      <span>Home</span>
-                  </a>
-              </li>
-              <li class="flex items-center">
-                  <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right size-4 text-zinc-400"
-                  >
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                      <path d="M9 6l6 6l-6 6"></path>
-                  </svg>
-              </li>
-              <li>
-                  <a href="#_" class="text-sm flex items-center gap-2 font-medium text-white/80 hover:text-white transition-colors duration-200" aria-current="page">
-                      Store
-                  </a>
-              </li>
-          </ol>
-      </nav>
-  </div>
-
-  <!-- Store Content -->
-  <div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-4">
-          <!-- RAM Card -->
-          <div class="bg-white/5 rounded-2xl p-8">
-              <h3 class="text-xl text-white font-semibold mb-4">RAM</h3>
-              <p class="text-gray-400 mb-4">Upgrade your server's memory</p>
-              <div class="flex justify-between items-center mb-4">
-                  <span class="text-lg text-white font-medium"><%= resourceCosts.ram %> Coins / GB</span>
-                  <div class="flex items-center">
-                      <button @click="decrementRAM()" class="bg-white/5 text-white px-2 py-1 rounded-l">-</button>
-                      <input x-model.number="ram" type="number" min="1" class="bg-[#1a1f2a]/50 text-white w-16 text-center px-2 py-1 border-t border-b border-white/5">
-                      <button @click="incrementRAM()" class="bg-white/5 text-white px-2 py-1 rounded-r">+</button>
+                    </div>
+                    <div class="ml-3">
+                      <p class="font-medium">Invalid Amount</p>
+                      <p class="text-sm opacity-90">The amount entered is invalid. Please check and try again.</p>
+                    </div>
+                    <button onclick="this.parentElement.remove()" class="ml-auto -mx-1.5 -my-1.5 rounded-lg p-1.5 inline-flex items-center justify-center h-8 w-8 hover:bg-red-800/30 transition-colors focus:outline-none">
+                      <svg class="w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                      </svg>
+                    </button>
                   </div>
-              </div>
-              <button @click="buyRAM()" class="w-full bg-orange-600 font-medium text-white py-2 rounded-full hover:bg-orange-700 transition">
-                  Buy RAM
-              </button>
-          </div>
-
-          <!-- Disk Card -->
-          <div class="bg-white/5 rounded-2xl p-8">
-              <h3 class="text-xl text-white font-semibold mb-4">Disk</h3>
-              <p class="text-gray-400 mb-4">Expand your storage capacity</p>
-              <div class="flex justify-between items-center mb-4">
-                  <span class="text-lg text-white font-medium"><%= resourceCosts.disk %> Coins / 5GB</span>
-                  <div class="flex items-center">
-                      <button @click="decrementDisk()" class="bg-white/5 text-white px-2 py-1 rounded-l">-</button>
-                      <input x-model.number="disk" type="number" min="1" class="bg-[#1a1f2a]/50 text-white w-16 text-center px-2 py-1 border-t border-b border-white/5">
-                      <button @click="incrementDisk()" class="bg-white/5 text-white px-2 py-1 rounded-r">+</button>
+                </div>
+                <% } else if (req.query.success == "BOUGHTPLAN") { %>
+                  <div class="animate-fade-in-up bg-green-900/30 border border-green-500/30 rounded-lg text-green-100 px-4 py-3 relative mb-6 shadow-lg backdrop-blur-sm" role="alert">
+                    <div class="flex items-center">
+                      <div class="flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                      </div>
+                      <div class="ml-3">
+                        <p class="font-medium">Plan Purchased Successfully</p>
+                        <p class="text-sm opacity-90">You have successfully purchased the plan.</p>
+                      </div>
+                      <button onclick="this.parentElement.remove()" class="ml-auto -mx-1.5 -my-1.5 rounded-lg p-1.5 inline-flex items-center justify-center h-8 w-8 hover:bg-green-800/30 transition-colors focus:outline-none">
+                        <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                      </button>
+                    </div>
                   </div>
-              </div>
-              <button @click="buyDisk()" class="w-full bg-orange-600 font-medium text-white py-2 rounded-full hover:bg-orange-700 transition">
-                  Buy Disk
-              </button>
-          </div>
+                  <% } else if (req.query.err == "ALREADYPLAN") { %>
+                    <div class="animate-fade-in-up bg-yellow-900/30 border border-yellow-500/30 rounded-lg text-yellow-100 px-4 py-3 relative mb-6 shadow-lg backdrop-blur-sm" role="alert">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                          </svg>
+                        </div>
+                        <div class="ml-3">
+                          <p class="font-medium">Plan Already Purchased</p>
+                          <p class="text-sm opacity-90">You already have this plan.</p>
+                        </div>
+                        <button onclick="this.parentElement.remove()" class="ml-auto -mx-1.5 -my-1.5 rounded-lg p-1.5 inline-flex items-center justify-center h-8 w-8 hover:bg-yellow-800/30 transition-colors focus:outline-none">
+                          <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    <% } else if (req.query.err == "INVALIDPLAN") { %>
+                      <div class="animate-fade-in-up bg-red-900/30 border border-red-500/30 rounded-lg text-red-100 px-4 py-3 relative mb-6 shadow-lg backdrop-blur-sm" role="alert">
+                        <div class="flex items-center">
+                          <div class="flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                            </svg>
+                          </div>
+                          <div class="ml-3">
+                            <p class="font-medium">Invalid Plan</p>
+                            <p class="text-sm opacity-90">The plan you selected is not valid.</p>
+                          </div>
+                          <button onclick="this.parentElement.remove()" class="ml-auto -mx-1.5 -my-1.5 rounded-lg p-1.5 inline-flex items-center justify-center h-8 w-8 hover:bg-red-800/30 transition-colors focus:outline-none">
+                            <svg class="w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    <% } %>
 
-          <!-- CPU Card -->
-          <div class="bg-white/5 rounded-2xl p-8">
-              <h3 class="text-xl text-white font-semibold mb-4">CPU</h3>
-              <p class="text-gray-400 mb-4">Boost your processing power</p>
-              <div class="flex justify-between items-center mb-4">
-                  <span class="text-lg text-white font-medium"><%= resourceCosts.cpu %> Coins / Core</span>
-                  <div class="flex items-center">
-                      <button @click="decrementCPU()" class="bg-white/5 text-white px-2 py-1 rounded-l">-</button>
-                      <input x-model.number="cpu" type="number" min="1" class="bg-[#1a1f2a]/50 text-white w-16 text-center px-2 py-1 border-t border-b border-white/5">
-                      <button @click="incrementCPU()" class="bg-white/5 text-white px-2 py-1 rounded-r">+</button>
+              <!-- Resource Plans -->
+              <div class="animate-fade-in">
+                <div class="flex items-center mb-8">
+                  <div class="flex-1">
+                    <h1 class="text-3xl font-bold text-white">Resource Plans</h1>
+                    <p class="text-gray-400 mt-2">Upgrade your plans to get more resources and features</p>
                   </div>
+                  <div class="bg-blue-500/10 rounded-full p-2 animate-pulse">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                </div>
+
+                <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  <% resourcePlans.forEach(plan => { %>
+                  <div class="flex flex-col rounded-xl shadow-lg overflow-hidden bg-gray-800/60 border border-gray-700 hover:border-blue-500/50 transition-all duration-300 hover:shadow-blue-500/10 hover:-translate-y-1 transform group">
+                    <div class="p-6 flex flex-col justify-between flex-1">
+                      <div>
+                        <div class="flex justify-between items-start">
+                          <h3 class="text-xl font-semibold text-white mb-2"><%= plan.name %></h3>
+                          <% if (plan.hasPlan) { %>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-900/30 text-green-300 border border-green-500/50">
+                              Active
+                            </span>
+                          <% } %>
+                        </div>
+                        <div class="mt-4 mb-6">
+                          <span class="text-3xl font-bold text-white"><%= plan.price %></span>
+                          <span class="text-lg font-medium text-gray-300"> coins</span>
+                        </div>
+                        <div class="border-t border-gray-700 pt-4">
+                          <p class="text-base text-gray-300 mb-3 font-medium">Includes:</p>
+                          <ul class="space-y-3">
+                            <li class="flex items-center">
+                              <div class="bg-blue-500/10 p-1 rounded-full mr-3">
+                                <svg class="h-4 w-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                              </div>
+                              <span class="text-gray-300"><%= plan.resources.cpu %> CPU</span>
+                            </li>
+                            <li class="flex items-center">
+                              <div class="bg-purple-500/10 p-1 rounded-full mr-3">
+                                <svg class="h-4 w-4 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                              </div>
+                              <span class="text-gray-300"><%= plan.resources.ram %> MB RAM</span>
+                            </li>
+                            <li class="flex items-center">
+                              <div class="bg-green-500/10 p-1 rounded-full mr-3">
+                                <svg class="h-4 w-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                              </div>
+                              <span class="text-gray-300"><%= plan.resources.disk %> MB Disk</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <% if (plan.hasPlan) { %>
+                        <button class="mt-6 w-full py-3 px-4 rounded-lg bg-green-900/30 border border-green-500/50 text-green-300 font-medium cursor-not-allowed flex items-center justify-center group-hover:bg-green-900/40 transition-colors">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                          </svg>
+                          Current Plan
+                        </button>
+                      <% } else { %>
+                      <a href="../buyplan?plan=<%= plan.id %>" class="mt-6 group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-md hover:shadow-lg transition-all duration-200">
+                        <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-200 group-hover:text-blue-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        </span>
+                        Purchase Plan
+                      </a>
+                      <% } %>
+                    </div>
+                  </div>
+                  <% }) %>
+                </div>
               </div>
-              <button @click="buyCPU()" class="w-full bg-orange-600 font-medium text-white py-2 rounded-full hover:bg-orange-700 transition">
-                  Buy CPU
-              </button>
+
+              <div class="hidden sm:block my-12" aria-hidden="true">
+                <div class="py-5">
+                  <div class="border-t border-gray-700/50 relative">
+                    <div class="absolute left-1/2 -translate-x-1/2 -top-3 bg-gray-800 px-4 text-gray-500">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Extra Resources -->
+              <div class="animate-fade-in">
+                <div class="flex items-center mb-8">
+                  <div class="flex-1">
+                    <h2 class="text-2xl font-bold text-white">Additional Resources</h2>
+                    <p class="text-gray-400 mt-2">Purchase extra resources as needed</p>
+                  </div>
+                  <div class="bg-purple-500/10 rounded-full p-2 animate-pulse-slow">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                    </svg>
+                  </div>
+                </div>
+
+                <div class="mt-6 grid gap-6 lg:grid-cols-3">
+                  <!-- CPU Card -->
+                  <div class="flex flex-col rounded-xl shadow-lg overflow-hidden bg-gray-800/60 border border-gray-700 hover:border-blue-500/50 transition-all duration-300 hover:shadow-blue-500/10 hover:-translate-y-1 transform group">
+                    <div class="p-6 flex flex-col justify-between flex-1">
+                      <div>
+                        <div class="flex items-center mb-4">
+                          <div class="bg-blue-500/10 p-2 rounded-lg mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                            </svg>
+                          </div>
+                          <h3 class="text-xl font-semibold text-white">Extra CPU</h3>
+                        </div>
+                        <div class="pl-12">
+                          <p class="text-gray-300 mb-1">Amount: <span class="text-white font-medium">100%</span></p>
+                          <p class="text-gray-300">Cost: <span class="text-white font-medium"><%= resourceCosts.cpu %> coins</span></p>
+                        </div>
+                      </div>
+                      <a href="../buyresource?resource=cpu&amount=1" class="mt-6 group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-md hover:shadow-lg transition-all duration-200">
+                        Purchase CPU
+                      </a>
+                    </div>
+                  </div>
+
+                  <!-- RAM Card -->
+                  <div class="flex flex-col rounded-xl shadow-lg overflow-hidden bg-gray-800/60 border border-gray-700 hover:border-purple-500/50 transition-all duration-300 hover:shadow-purple-500/10 hover:-translate-y-1 transform group">
+                    <div class="p-6 flex flex-col justify-between flex-1">
+                      <div>
+                        <div class="flex items-center mb-4">
+                          <div class="bg-purple-500/10 p-2 rounded-lg mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                            </svg>
+                          </div>
+                          <h3 class="text-xl font-semibold text-white">Extra RAM</h3>
+                        </div>
+                        <div class="pl-12">
+                          <p class="text-gray-300 mb-1">Amount: <span class="text-white font-medium">1024MB</span></p>
+                          <p class="text-gray-300">Cost: <span class="text-white font-medium"><%= resourceCosts.ram %> coins</span></p>
+                        </div>
+                      </div>
+                      <a href="../buyresource?resource=ram&amount=1" class="mt-6 group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 shadow-md hover:shadow-lg transition-all duration-200">
+                        Purchase RAM
+                      </a>
+                    </div>
+                  </div>
+
+                  <!-- Disk Card -->
+                  <div class="flex flex-col rounded-xl shadow-lg overflow-hidden bg-gray-800/60 border border-gray-700 hover:border-green-500/50 transition-all duration-300 hover:shadow-green-500/10 hover:-translate-y-1 transform group">
+                    <div class="p-6 flex flex-col justify-between flex-1">
+                      <div>
+                        <div class="flex items-center mb-4">
+                          <div class="bg-green-500/10 p-2 rounded-lg mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+                            </svg>
+                          </div>
+                          <h3 class="text-xl font-semibold text-white">Extra Disk</h3>
+                        </div>
+                        <div class="pl-12">
+                          <p class="text-gray-300 mb-1">Amount: <span class="text-white font-medium">1024MB</span></p>
+                          <p class="text-gray-300">Cost: <span class="text-white font-medium"><%= resourceCosts.disk %> coins</span></p>
+                        </div>
+                      </div>
+                      <a href="../buyresource?resource=disk&amount=10" class="mt-6 group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 shadow-md hover:shadow-lg transition-all duration-200">
+                        Purchase Disk
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+        </main>
       </div>
-  </div>
-</main>
+    </div>
 
-<script>
-function store() {
-  return {
-      ram: 1,
-      disk: 1,
-      cpu: 1,
-      incrementRAM() { this.ram++ },
-      decrementRAM() { if (this.ram > 1) this.ram-- },
-      incrementDisk() { this.disk++ },
-      decrementDisk() { if (this.disk > 1) this.disk-- },
-      incrementCPU() { this.cpu++ },
-      decrementCPU() { if (this.cpu > 1) this.cpu-- },
-      buyRAM() {
-          if (this.ram > 0) {
-              window.location.href = `/buyresource?resource=ram&amount=${this.ram}`;
-          }
-      },
-      buyDisk() {
-          if (this.disk > 0) {
-              window.location.href = `/buyresource?resource=disk&amount=${this.disk * 5}`;
-          }
-      },
-      buyCPU() {
-          if (this.cpu > 0) {
-              window.location.href = `/buyresource?resource=cpu&amount=${this.cpu}`;
-          }
-      }
+<%- include('./components/footer') %>
+
+<style>
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
   }
-}
+  
+  .animate-fade-in-up {
+    animation: fadeInUp 0.5s ease-in-out;
+  }
+  
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  .animate-pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
 
-      // Animated Background
-      const canvas = document.getElementById("animated-bg");
-      const ctx = canvas.getContext("2d");
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      let particles = [];
-      
-      class Particle {
-        constructor(x, y, size, speedX, speedY) {
-          this.x = x;
-          this.y = y;
-          this.size = size;
-          this.speedX = speedX;
-          this.speedY = speedY;
-        }
-        update() {
-          this.x += this.speedX;
-          this.y += this.speedY;
-          if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
-          if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
-        }
-        draw() {
-          ctx.fillStyle = "rgba(255, 255, 255, 0.3)";
-          ctx.beginPath();
-          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
-      
-      function initParticles() {
-        for (let i = 0; i < 50; i++) {
-          let size = Math.random() * 3 + 1;
-          let x = Math.random() * canvas.width;
-          let y = Math.random() * canvas.height;
-          let speedX = (Math.random() - 0.5) * 2;
-          let speedY = (Math.random() - 0.5) * 2;
-          particles.push(new Particle(x, y, size, speedX, speedY));
-        }
-      }
-      
-      function animateParticles() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => {
-          p.update();
-          p.draw();
-        });
-        requestAnimationFrame(animateParticles);
-      }
-      
-      initParticles();
-      animateParticles();
-    </script>
-    
-    <%- include('./components/footer') %>
-  </div>
-</body>
+  /* Smooth transitions for interactive elements */
+  .transition-all {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
+  /* Better focus states for accessibility */
+  .focus\:ring-2:focus {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+  }
+
+  /* Improved card hover effects */
+  .group:hover .group-hover\:bg-green-900\/40 {
+    background-color: rgba(5, 150, 105, 0.4);
+  }
+</style>

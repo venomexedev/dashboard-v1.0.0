@@ -26,7 +26,7 @@ Follow the steps below to set up and run the dashboard:
 
 2. Navigate into the project directory:
    ```bash
-   cd draco-dashboard
+   cd dashboard-v1.0.0
    ```
 
 3. Install dependencies using Bun:
